@@ -1,0 +1,54 @@
+name: finance_buddie
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.7.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.1  # Versión estable con soporte para null safety
+  shared_preferences: ^2.2.2  # Versión estable con mejoras de rendimiento
+  provider: ^6.1.2  # Versión más estable para gestión de estado
+  cupertino_icons: ^1.0.8  # Mantener esta versión (es estable)
+  flutter_svg: ^2.0.7  # Versión más ligera y optimizada
+  intl: ^0.20.2  # Versión estable con soporte para formatos internacionales
+  connectivity_plus: ^6.1.3  # Buen manejo de estado de conexión
+  google_fonts: ^6.1.0  # Versión actual con mejor carga de fuentes
+  flutter_launcher_icons: ^0.14.3  # Versión estable para íconos
+  fl_chart: ^0.55.2
+  sqflite: ^2.3.0
+  path: ^1.8.0
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0  # Versión más reciente para análisis estático
+  mime: ^2.0.0  # Versión estable para manejo de tipos MIME
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/buddie_icon.png"
+  adaptive_icon_background: "#ffffff"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/fonts/
+    - assets/images/
+
+    
+
+  fonts:
+    - family: CocomatPro
+      fonts:
+        - asset: assets/fonts/CocomatPro-Regular.ttf
+        - asset: assets/fonts/CocomatPro-Bold.ttf
+          weight: 700

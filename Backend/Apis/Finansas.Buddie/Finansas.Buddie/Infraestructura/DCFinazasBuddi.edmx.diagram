@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="95ea1086714b418293371dcdd84e0687" Name="Diagram1">
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.AportacionesMeta" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.HistorialSaldo" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.Mensajes" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.MetasAhorro" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.Token" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.Transacciones" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FINANZAS_BUDDIEModel.Usuarios" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK__Aportacio__idMet__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK__Historial__idUsu__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK__Mensajes__idUsua__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK__MetasAhor__idUsu__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK__Transacci__idMet__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK_Token_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="FINANZAS_BUDDIEModel.FK__Transacci__idUsu__2F10007B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

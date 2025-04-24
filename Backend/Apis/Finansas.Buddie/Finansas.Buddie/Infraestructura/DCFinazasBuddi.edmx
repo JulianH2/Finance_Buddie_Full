@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FINANZAS_BUDDIEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AportacionesMeta">
+          <Key>
+            <PropertyRef Name="idAportacion" />
+          </Key>
+          <Property Name="idAportacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idMeta" Type="int" />
+          <Property Name="monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="fechaAportacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HistorialSaldo">
+          <Key>
+            <PropertyRef Name="idHistorial" />
+          </Key>
+          <Property Name="idHistorial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="saldo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="fechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Mensajes">
+          <Key>
+            <PropertyRef Name="idMensaje" />
+          </Key>
+          <Property Name="idMensaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuarioRemitente" Type="int" />
+          <Property Name="contenidoPregunta" Type="varchar(max)" Nullable="false" />
+          <Property Name="contenidoRespuesta" Type="varchar(max)" />
+          <Property Name="fechaEnvio" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MetasAhorro">
+          <Key>
+            <PropertyRef Name="idMeta" />
+          </Key>
+          <Property Name="idMeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="nombreMeta" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="montoObjetivo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="montoActual" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="fechaInicio" Type="datetime" />
+          <Property Name="fechaFin" Type="datetime" Nullable="false" />
+          <Property Name="estaCompletada" Type="bit" />
+          <Property Name="fechaCreacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="idToken" />
+          </Key>
+          <Property Name="idToken" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="varchar(max)" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transacciones">
+          <Key>
+            <PropertyRef Name="idTransaccion" />
+          </Key>
+          <Property Name="idTransaccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="tipo" Type="varchar" MaxLength="10" />
+          <Property Name="fechaOperacion" Type="datetime" Nullable="false" />
+          <Property Name="categoria" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="fechaCreacion" Type="datetime" />
+          <Property Name="idMeta" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="hashContraseña" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+          <Property Name="fechaCreacion" Type="datetime" />
+          <Property Name="estaActivo" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Aportacio__idMet__38996AB5">
+          <End Role="MetasAhorro" Type="Self.MetasAhorro" Multiplicity="0..1" />
+          <End Role="AportacionesMeta" Type="Self.AportacionesMeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetasAhorro">
+              <PropertyRef Name="idMeta" />
+            </Principal>
+            <Dependent Role="AportacionesMeta">
+              <PropertyRef Name="idMeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historial__idUsu__3C69FB99">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="HistorialSaldo" Type="Self.HistorialSaldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="HistorialSaldo">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mensajes__idUsua__34C8D9D1">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Mensajes" Type="Self.Mensajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Mensajes">
+              <PropertyRef Name="idUsuarioRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MetasAhor__idUsu__286302EC">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="MetasAhorro" Type="Self.MetasAhorro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="MetasAhorro">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacci__idMet__31EC6D26">
+          <End Role="MetasAhorro" Type="Self.MetasAhorro" Multiplicity="0..1" />
+          <End Role="Transacciones" Type="Self.Transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetasAhorro">
+              <PropertyRef Name="idMeta" />
+            </Principal>
+            <Dependent Role="Transacciones">
+              <PropertyRef Name="idMeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacci__idUsu__2F10007B">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Transacciones" Type="Self.Transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Transacciones">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Token_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FINANZAS_BUDDIEModelStoreContainer">
+          <EntitySet Name="AportacionesMeta" EntityType="Self.AportacionesMeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistorialSaldo" EntityType="Self.HistorialSaldo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mensajes" EntityType="Self.Mensajes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetasAhorro" EntityType="Self.MetasAhorro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transacciones" EntityType="Self.Transacciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Aportacio__idMet__38996AB5" Association="Self.FK__Aportacio__idMet__38996AB5">
+            <End Role="MetasAhorro" EntitySet="MetasAhorro" />
+            <End Role="AportacionesMeta" EntitySet="AportacionesMeta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historial__idUsu__3C69FB99" Association="Self.FK__Historial__idUsu__3C69FB99">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="HistorialSaldo" EntitySet="HistorialSaldo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mensajes__idUsua__34C8D9D1" Association="Self.FK__Mensajes__idUsua__34C8D9D1">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Mensajes" EntitySet="Mensajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MetasAhor__idUsu__286302EC" Association="Self.FK__MetasAhor__idUsu__286302EC">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="MetasAhorro" EntitySet="MetasAhorro" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacci__idMet__31EC6D26" Association="Self.FK__Transacci__idMet__31EC6D26">
+            <End Role="MetasAhorro" EntitySet="MetasAhorro" />
+            <End Role="Transacciones" EntitySet="Transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacci__idUsu__2F10007B" Association="Self.FK__Transacci__idUsu__2F10007B">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Transacciones" EntitySet="Transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_Usuarios" Association="Self.FK_Token_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FINANZAS_BUDDIEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AportacionesMeta">
+          <Key>
+            <PropertyRef Name="idAportacion" />
+          </Key>
+          <Property Name="idAportacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idMeta" Type="Int32" />
+          <Property Name="monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="fechaAportacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MetasAhorro" Relationship="Self.FK__Aportacio__idMet__38996AB5" FromRole="AportacionesMeta" ToRole="MetasAhorro" />
+        </EntityType>
+        <EntityType Name="HistorialSaldo">
+          <Key>
+            <PropertyRef Name="idHistorial" />
+          </Key>
+          <Property Name="idHistorial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="saldo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="fechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Historial__idUsu__3C69FB99" FromRole="HistorialSaldo" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Mensajes">
+          <Key>
+            <PropertyRef Name="idMensaje" />
+          </Key>
+          <Property Name="idMensaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuarioRemitente" Type="Int32" />
+          <Property Name="contenidoPregunta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contenidoRespuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fechaEnvio" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Mensajes__idUsua__34C8D9D1" FromRole="Mensajes" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="MetasAhorro">
+          <Key>
+            <PropertyRef Name="idMeta" />
+          </Key>
+          <Property Name="idMeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="nombreMeta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="montoObjetivo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="montoActual" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="fechaInicio" Type="DateTime" Precision="3" />
+          <Property Name="fechaFin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estaCompletada" Type="Boolean" />
+          <Property Name="fechaCreacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AportacionesMeta" Relationship="Self.FK__Aportacio__idMet__38996AB5" FromRole="MetasAhorro" ToRole="AportacionesMeta" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__MetasAhor__idUsu__286302EC" FromRole="MetasAhorro" ToRole="Usuarios" />
+          <NavigationProperty Name="Transacciones" Relationship="Self.FK__Transacci__idMet__31EC6D26" FromRole="MetasAhorro" ToRole="Transacciones" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="idToken" />
+          </Key>
+          <Property Name="idToken" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Token_Usuarios" FromRole="Token" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Transacciones">
+          <Key>
+            <PropertyRef Name="idTransaccion" />
+          </Key>
+          <Property Name="idTransaccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="monto" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="tipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fechaOperacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="fechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="idMeta" Type="Int32" />
+          <NavigationProperty Name="MetasAhorro" Relationship="Self.FK__Transacci__idMet__31EC6D26" FromRole="Transacciones" ToRole="MetasAhorro" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Transacci__idUsu__2F10007B" FromRole="Transacciones" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hashContraseña" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="estaActivo" Type="Boolean" />
+          <NavigationProperty Name="HistorialSaldo" Relationship="Self.FK__Historial__idUsu__3C69FB99" FromRole="Usuarios" ToRole="HistorialSaldo" />
+          <NavigationProperty Name="Mensajes" Relationship="Self.FK__Mensajes__idUsua__34C8D9D1" FromRole="Usuarios" ToRole="Mensajes" />
+          <NavigationProperty Name="MetasAhorro" Relationship="Self.FK__MetasAhor__idUsu__286302EC" FromRole="Usuarios" ToRole="MetasAhorro" />
+          <NavigationProperty Name="Token" Relationship="Self.FK_Token_Usuarios" FromRole="Usuarios" ToRole="Token" />
+          <NavigationProperty Name="Transacciones" Relationship="Self.FK__Transacci__idUsu__2F10007B" FromRole="Usuarios" ToRole="Transacciones" />
+        </EntityType>
+        <Association Name="FK__Aportacio__idMet__38996AB5">
+          <End Role="MetasAhorro" Type="Self.MetasAhorro" Multiplicity="0..1" />
+          <End Role="AportacionesMeta" Type="Self.AportacionesMeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetasAhorro">
+              <PropertyRef Name="idMeta" />
+            </Principal>
+            <Dependent Role="AportacionesMeta">
+              <PropertyRef Name="idMeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historial__idUsu__3C69FB99">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="HistorialSaldo" Type="Self.HistorialSaldo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="HistorialSaldo">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mensajes__idUsua__34C8D9D1">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Mensajes" Type="Self.Mensajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Mensajes">
+              <PropertyRef Name="idUsuarioRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MetasAhor__idUsu__286302EC">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="MetasAhorro" Type="Self.MetasAhorro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="MetasAhorro">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacci__idMet__31EC6D26">
+          <End Role="MetasAhorro" Type="Self.MetasAhorro" Multiplicity="0..1" />
+          <End Role="Transacciones" Type="Self.Transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetasAhorro">
+              <PropertyRef Name="idMeta" />
+            </Principal>
+            <Dependent Role="Transacciones">
+              <PropertyRef Name="idMeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Token_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacci__idUsu__2F10007B">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Transacciones" Type="Self.Transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Transacciones">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FINANZAS_BUDDIEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AportacionesMeta" EntityType="Self.AportacionesMeta" />
+          <EntitySet Name="HistorialSaldo" EntityType="Self.HistorialSaldo" />
+          <EntitySet Name="Mensajes" EntityType="Self.Mensajes" />
+          <EntitySet Name="MetasAhorro" EntityType="Self.MetasAhorro" />
+          <EntitySet Name="Token" EntityType="Self.Token" />
+          <EntitySet Name="Transacciones" EntityType="Self.Transacciones" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK__Aportacio__idMet__38996AB5" Association="Self.FK__Aportacio__idMet__38996AB5">
+            <End Role="MetasAhorro" EntitySet="MetasAhorro" />
+            <End Role="AportacionesMeta" EntitySet="AportacionesMeta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historial__idUsu__3C69FB99" Association="Self.FK__Historial__idUsu__3C69FB99">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="HistorialSaldo" EntitySet="HistorialSaldo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mensajes__idUsua__34C8D9D1" Association="Self.FK__Mensajes__idUsua__34C8D9D1">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Mensajes" EntitySet="Mensajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MetasAhor__idUsu__286302EC" Association="Self.FK__MetasAhor__idUsu__286302EC">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="MetasAhorro" EntitySet="MetasAhorro" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacci__idMet__31EC6D26" Association="Self.FK__Transacci__idMet__31EC6D26">
+            <End Role="MetasAhorro" EntitySet="MetasAhorro" />
+            <End Role="Transacciones" EntitySet="Transacciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_Usuarios" Association="Self.FK_Token_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacci__idUsu__2F10007B" Association="Self.FK__Transacci__idUsu__2F10007B">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Transacciones" EntitySet="Transacciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FINANZAS_BUDDIEModelStoreContainer" CdmEntityContainer="FINANZAS_BUDDIEEntities">
+          <EntitySetMapping Name="AportacionesMeta">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.AportacionesMeta">
+              <MappingFragment StoreEntitySet="AportacionesMeta">
+                <ScalarProperty Name="idAportacion" ColumnName="idAportacion" />
+                <ScalarProperty Name="idMeta" ColumnName="idMeta" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="fechaAportacion" ColumnName="fechaAportacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistorialSaldo">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.HistorialSaldo">
+              <MappingFragment StoreEntitySet="HistorialSaldo">
+                <ScalarProperty Name="idHistorial" ColumnName="idHistorial" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="fechaRegistro" ColumnName="fechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mensajes">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.Mensajes">
+              <MappingFragment StoreEntitySet="Mensajes">
+                <ScalarProperty Name="idMensaje" ColumnName="idMensaje" />
+                <ScalarProperty Name="idUsuarioRemitente" ColumnName="idUsuarioRemitente" />
+                <ScalarProperty Name="contenidoPregunta" ColumnName="contenidoPregunta" />
+                <ScalarProperty Name="contenidoRespuesta" ColumnName="contenidoRespuesta" />
+                <ScalarProperty Name="fechaEnvio" ColumnName="fechaEnvio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetasAhorro">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.MetasAhorro">
+              <MappingFragment StoreEntitySet="MetasAhorro">
+                <ScalarProperty Name="idMeta" ColumnName="idMeta" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="nombreMeta" ColumnName="nombreMeta" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="montoObjetivo" ColumnName="montoObjetivo" />
+                <ScalarProperty Name="montoActual" ColumnName="montoActual" />
+                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+                <ScalarProperty Name="estaCompletada" ColumnName="estaCompletada" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Token">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="idToken" ColumnName="idToken" />
+                <ScalarProperty Name="Token1" ColumnName="Token" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transacciones">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.Transacciones">
+              <MappingFragment StoreEntitySet="Transacciones">
+                <ScalarProperty Name="idTransaccion" ColumnName="idTransaccion" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="fechaOperacion" ColumnName="fechaOperacion" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="idMeta" ColumnName="idMeta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="FINANZAS_BUDDIEModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="hashContraseña" ColumnName="hashContraseña" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="estaActivo" ColumnName="estaActivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
